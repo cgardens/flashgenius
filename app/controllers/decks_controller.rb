@@ -1,4 +1,5 @@
 class DecksController < ApplicationController
+
   def edit
     # /users/1/decks/2/edit
     @user = User.find(params[:user_id])
@@ -19,7 +20,7 @@ class DecksController < ApplicationController
 
   def new
     @user = User.find(params[:user_id])
-    end
+  end
 
   def create
     @user = User.find(params[:user_id])

@@ -9,6 +9,12 @@ class CardsController < ApplicationController
     render "/users/#{@user.id}/decks/#{@deck.id}/edit"
   end
 
+  def new
+    @user = User.find(params[:user_id])
+    @deck = @user.decks.find(params[:deck_id])
+    @card = @deck.cards.new()
+  end
+
   def create
     @user = User.find(params[:id])
     @deck = @user.decks.find(params[:deck_id])
