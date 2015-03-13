@@ -1,11 +1,17 @@
-<h1>new question</h1>
+<h1>New Question</h1>
 
-<form>
+<form action='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards' method='post'>
+  <p>Question:</p>
   </input><input type='text' name='card[question]'></input>
-  <input id='mybox' type='checkbox' name='card[answer_1_boolean]' checked="checked"><input type='text' name='card[answer_1]'></input>
-  <input type='checkbox' name='card[answer_2_boolean]' checked="checked"><input type='text' name='card[answer_2]'></input>
-  <input type='checkbox' name='card[answer_3_boolean]' checked="checked"><input type='text' name='card[answer_3]'></input>
-  <input type='checkbox' name='card[answer_4_boolean]' checked="checked"><input type='text' name='card[answer_4]'></input>
+  <p>Answers:</p><br>
+  1<input type='text' name='card[answer_1]'></input><br>
+  2<input type='text' name='card[answer_2]'></input><br>
+  3<input type='text' name='card[answer_3]'></input><br>
+  4<input type='text' name='card[answer_4]'></input><br>
+  <p>The Correct Answer is: </p><br>
+  <input type='text' name='card[answer_number]'></input><br>
+  <input type='submit' name='Create'></input>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 </form>
 
-<input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>
+

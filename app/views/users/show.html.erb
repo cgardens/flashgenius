@@ -3,6 +3,6 @@
 
 <div class='decks-container'>
 <% @decks.each do |deck| %>
-  <div><%= deck.name %></div>
+  <div><a href="/users/<%= @user.id %>/decks/<%= deck.id%>/"><%= deck.name %></a> | <a href="/users/<%= @user.id %>/decks/<%= deck.id%>/edit">edit</a></div>
 <% end %>
 </div>

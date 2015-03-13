@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20150312233357) do
     t.string   "answer_2"
     t.string   "answer_3"
     t.string   "answer_4"
+    t.string   "answer_number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
