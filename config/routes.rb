@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :decks do
+      member do
+        post 'validate'
+        get 'next_card'
+      end
       resources :cards
     end
   end
@@ -27,10 +31,13 @@ Rails.application.routes.draw do
   #       get 'short'
   #       post 'toggle'
   #     end
-  #
+  # /products/1/short
   #     collection do
   #       get 'sold'
   #     end
+  # /products/sold
+  # /products/new
+  # /decks/2/next_card
   #   end
 
   # Example resource route with sub-resources:

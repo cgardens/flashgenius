@@ -9,6 +9,15 @@ class DecksController < ApplicationController
     # render json: {user: @user, deck: @deck, cards: @cards}
   end
 
+  def show
+    # /users/1/decks/2/edit
+    @user = User.find(params[:user_id])
+    @deck = @user.decks.find(params[:id])
+    @cards = @deck.cards
+
+    # render json: {user: @user, deck: @deck, cards: @cards}
+  end
+
   def update
     # /users/1/decks/2/edit
     @user = User.find(params[:user_id])
@@ -30,6 +39,13 @@ class DecksController < ApplicationController
     else
       render json: {error_code: '...', msg: 'no good', user: @user, deck: @deck}
     end
+  end
+
+  def validate
+    params[performance_info]
+  end
+
+  def next_card
   end
 
   private

@@ -1,6 +1,8 @@
 <h1>profile page</h1>
 <h2><%= @user.first_name %></h2>
 
+<a href='/users/<%= @user.id %>/decks/new'>create new deck</a>
+
 <div class='decks-container'>
 <% @decks.each do |deck| %>
   <div><a href="/users/<%= @user.id %>/decks/<%= deck.id%>/"><%= deck.name %></a> | <a href="/users/<%= @user.id %>/decks/<%= deck.id%>/edit">edit</a></div>
