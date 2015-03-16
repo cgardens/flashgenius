@@ -10,12 +10,19 @@ class DecksController < ApplicationController
   end
 
   def show
-    # /users/1/decks/2/edit
+    # p params
     @user = User.find(params[:user_id])
     @deck = @user.decks.find(params[:id])
     @cards = @deck.cards
+  end
 
-    # render json: {user: @user, deck: @deck, cards: @cards}
+  def start_quiz
+    @user = User.find(params[:user_id])
+    @deck = @user.decks.find(params[:id])
+    @cards = @deck.cards
+    @cards = @cards.shuffle
+
+    render json: {user: @user, deck: @deck, cards: @cards}
   end
 
   def update
@@ -42,10 +49,19 @@ class DecksController < ApplicationController
   end
 
   def validate
-    params[performance_info]
+    p params
+    @user = User.find(params[:user_id])
+    @deck = @user.decks.find(params[:deck_id])
+    @cards_deck = @deck.cards_decks.where(card_id: params[:card_id])[0]
+    performance = @cards_deck.performances.create(certainty: params[:certainty], correct: params[:correct], previous_card_id: params[:previous_card_id])
+    p Performance.last
+    p performance
+
+    render json: {msg: 'success'}
   end
 
   def next_card
+    #happen client side, consider removing
   end
 
   private
