@@ -1,0 +1,2 @@
+module AlldecksHelper
+end

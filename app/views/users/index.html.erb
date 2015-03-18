@@ -1,0 +1,9 @@
+<h1>all users</h1>
+
+<h3>search users</h3>
+<input type='text'></input>
+<p>doesn't work right now</p>
+
+<% @users.each do |user| %>
+  <p><%= link_to user.first_name, user_path(user.id) %> | <%= user.email %></p>
+<% end %>
