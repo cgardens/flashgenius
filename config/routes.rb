@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'welcome/oauth2callback'
   get 'welcome/logout'
   get 'alldecks/index'
+  get 'alldecks/live_search_decks'
 
   resources :users do
     collection do
