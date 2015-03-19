@@ -34,13 +34,14 @@ ActiveRecord::Schema.define(version: 20150312233357) do
   create_table "decks", force: true do |t|
     t.string   "user_id"
     t.string   "name"
+    t.float    "performance_score"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "performances", force: true do |t|
     t.string   "cards_deck_id"
-    t.boolean  "correct"
+    t.string   "correct"
     t.string   "previous_card_id"
     t.string   "certainty"
     t.datetime "created_at"
