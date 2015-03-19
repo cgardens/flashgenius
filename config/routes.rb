@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   get 'welcome/index'
+  get 'welcome/auth'
+  get 'welcome/oauth2callback'
+  get 'welcome/oauth_login'
   get 'alldecks/index'
 
   resources :users do

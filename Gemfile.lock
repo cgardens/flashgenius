@@ -37,9 +37,13 @@ GEM
       execjs
     coffee-script-source (1.9.1)
     diff-lcs (1.2.5)
+    dotenv (1.0.2)
     erubis (2.7.0)
     execjs (2.4.0)
     hike (1.2.3)
+    httparty (0.13.3)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     jbuilder (2.2.11)
       activesupport (>= 3.0.0, < 5)
@@ -53,6 +57,7 @@ GEM
     mime-types (2.4.3)
     minitest (5.5.1)
     multi_json (1.11.0)
+    multi_xml (0.5.5)
     rack (1.5.2)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -127,8 +132,11 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  dotenv
+  httparty
   jbuilder (~> 2.0)
   jquery-rails
+  json
   rails (= 4.1.6)
   rspec-rails
   sass-rails (~> 4.0.3)
