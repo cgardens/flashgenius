@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
   get 'welcome/index'
+  get 'welcome/auth'
+  get 'welcome/oauth2callback'
+  get 'welcome/logout'
+  get 'alldecks/index'
+  get 'alldecks/live_search_decks'
 
   resources :users do
+    collection do
+      get 'live_search_users'
+    end
     resources :decks do
       member do
         post 'validate'
@@ -11,6 +19,8 @@ Rails.application.routes.draw do
       resources :cards
     end
   end
+
+  root 'welcome#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

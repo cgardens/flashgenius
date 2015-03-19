@@ -1,0 +1,42 @@
+<h1>Most Recent Decks</h1>
+
+<h3>search decks</h3>
+<input class='deck-search-bar' type='text'></input>
+<div class='search-decks-container'></div>
+
+
+<h3>Newest Decks</h3>
+<div class='decks-continer'>
+  <% @decks.each do |deck| %>
+    <div class='deck'><%= link_to deck.name, edit_user_deck_path(user_id: deck.user_id, id: deck.id) %></div>
+  <% end %>
+</div>
+
+<script>
+
+  $('.deck-search-bar').on('keyup paste', function(){
+    $.ajax({
+      url: '/alldecks/live_search_decks',
+      method: 'get',
+      dataType: 'json',
+      data: { 'search_query': $('.deck-search-bar').val() }
+    }).done(function(data){
+      $('.search-decks-container').empty()
+
+      deckMatches = data.deckMatches
+      if (!deckMatches) { return }
+      deckMatchesLength = deckMatches.length
+
+
+      for(var i = 0; i<deckMatchesLength; i++){
+        $('.search-decks-container').append('<div class=deck>' + '<a href=/users/' + deckMatches[i].user_id + '/decks/' + deckMatches[i].id + '/edit>' + deckMatches[i].name + '</a>' + '</div>')
+      }
+
+    }).fail(function(data){
+      console.log('live search ajax request failed')
+    })
+  })
+
+
+
+</script>
