@@ -10,7 +10,34 @@ class WelcomeController < ApplicationController
 
   def oauth2callback
     #code coming back from google
-    code = params[:code]
+
+    login_with_google(params[:code])
+
+    redirect_to user_path(session[:id])
+  end
+
+  def logout
+    logout_user
+  end
+
+  private
+
+  def login_with_google(code)
+    access_token = get_google_user_access_token(code)
+
+    user_info = get_google_user_info(access_token)
+
+    user = User.where(google_id: user_info[:google_id])[0]
+
+    if !user
+      user = User.new(user_info)
+      user.save
+    end
+
+    create_user_session(user)
+  end
+
+  def get_google_user_access_token(code)
     options = {
       body: {
         code: code,
@@ -20,32 +47,43 @@ class WelcomeController < ApplicationController
               grant_type: 'authorization_code'
       }
     }
-    p 'post request'
-    res1 = HTTParty.post('https://www.googleapis.com/oauth2/v3/token', options)
-    p access_token = res1['access_token']
-    res2 = HTTParty.get("https://www.googleapis.com/plus/v1/people/me?scope=openid%20email%20profile&access_token=#{access_token}")
-    p 'res2'
-    p res2
 
-    p 'res2.body'
-    p res2_body = JSON.parse(res2.body)
+    res = HTTParty.post('https://www.googleapis.com/oauth2/v3/token', options)
 
-    p "res2_body['id']"
-    p res2_body['id']
-
-    p "res2_body['name']['givenName']"
-    p res2_body['name']['givenName']
-
-    p "res2_body['emails'][0]['value']"
-    p res2_body['emails'][0]['value']
-
-    User.create(first_name: res2_body['name']['givenName'], email: res2_body['emails'][0]['value'], google_id: res2_body['id'])
-    render :index
+    access_token = res['access_token']
   end
 
-  def oauth_login
-    p params
-    render :index
+  def get_google_user_info(access_token)
+    res = HTTParty.get("https://www.googleapis.com/plus/v1/people/me?scope=openid%20email%20profile&access_token=#{access_token}")
+
+    res_body = JSON.parse(res.body)
+    p 'res_body'
+    p res_body
+
+    user_info = {}
+    user_info[:google_id] = res_body['id']
+    user_info[:first_name] = res_body['name']['givenName']
+    user_info[:email] = res_body['emails'][0]['value']
+
+    user_info
   end
+
+  def create_user_session(user)
+    if user
+      session[:id] = user.id
+      session[:email] = user.email
+      session[:first_name] = user.first_name
+      session[:google_id] = user.google_id
+    else
+      p 'invalid user'
+    end
+  end
+
+  def logout_user
+    session.clear
+
+    redirect_to root_path
+  end
+
 
 end

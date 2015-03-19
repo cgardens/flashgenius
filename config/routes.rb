@@ -2,10 +2,13 @@ Rails.application.routes.draw do
   get 'welcome/index'
   get 'welcome/auth'
   get 'welcome/oauth2callback'
-  get 'welcome/oauth_login'
+  get 'welcome/logout'
   get 'alldecks/index'
 
   resources :users do
+    collection do
+      get 'live_search_users'
+    end
     resources :decks do
       member do
         post 'validate'

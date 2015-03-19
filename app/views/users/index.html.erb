@@ -1,9 +1,38 @@
 <h1>all users</h1>
 
 <h3>search users</h3>
-<input type='text'></input>
-<p>doesn't work right now</p>
+<input class='user-search-bar' type='text'></input>
+<div class='users-container'>
+  <% @users.each do |user| %>
+    <p><%= link_to user.first_name, user_path(user.id) %> | <%= user.email %></p>
+  <% end %>
+</div>
 
-<% @users.each do |user| %>
-  <p><%= link_to user.first_name, user_path(user.id) %> | <%= user.email %></p>
-<% end %>
+<script>
+
+  $('.user-search-bar').on('keyup paste', function(){
+    $.ajax({
+      url: '/users/live_search_users',
+      method: 'get',
+      dataType: 'json',
+      data: { 'search_query': $('.user-search-bar').val() }
+    }).done(function(data){
+      $('.users-container').empty()
+      $('.users-container').append('<div class=email-matches></div>')
+      $('.users-container').append('<div class=first-name-matches></div>')
+
+      userMatches = data.userMatches
+      userMatchesLength = userMatches.length
+
+      for(var i = 0; i<userMatchesLength; i++){
+        $('.email-matches').append('<div class=user>' + '<a href=/users/' + userMatches[i].id + '>' + userMatches[i].first_name + '</a>' + '|' + userMatches[i].email + '</div>')
+      }
+
+    }).fail(function(data){
+      console.log('live search ajax request failed')
+    })
+  })
+
+
+
+</script>
