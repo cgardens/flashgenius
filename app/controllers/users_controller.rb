@@ -6,10 +6,52 @@ class UsersController < ApplicationController
     render json: @users
   end
 
+  #------- methods to order decks ----------------------------------------------
+
+  def calculate_single_card_ps(card) #Returns properly weighted performance score for each card
+    # p "Card is: "
+    # p card #Shit, this is actually a deck
+    card_performances = card.performances
+    individual_card_performance_score = 0
+    card_performances.each do |performance|
+      individual_card_performance_score += performance.correct.to_i * performance.certainty.to_f / card_performances.length
+    end
+    return individual_card_performance_score
+  end
+
+  def calculate_single_deck_ps(deck)
+    p "Deck is: "
+    p deck
+    cards = deck.cards
+    p "Cards is: "
+    p cards
+    deck_performance_score = 0
+    cards.each do |card|
+      deck_performance_score += (calculate_single_card_ps(card) / cards.length)
+    end
+    return deck_performance_score
+  end
+
+  def ordered_decks(user)
+    all_decks = user.decks
+    #Need to update the performance score for each deck
+    all_decks.each do |deck|
+      deck.update_attribute(:performance_score, calculate_single_deck_ps(deck))
+    end
+    #order decks by performance scores
+    # p "All_Decks: "
+    p "*"*100
+    p all_decks
+    ordered_decks = all_decks.order('performance_score DESC')
+    p all_decks
+    # all_decks.sort_by! {|a,b| a.performance_score <=> b.performance_score }
+    return ordered_decks
+  end
+  #------------------------------------------------------------------------------
+
   def show
     @user = User.find(params[:id])
-    @decks = @user.decks
-
+    @decks = ordered_decks(@user)
     # render json: {user: @user, decks: @decks}
   end
 
@@ -26,6 +68,5 @@ class UsersController < ApplicationController
   def user_info
     params.require(:user).permit(:email, :first_name, :google_id)
   end
-
 
 end
