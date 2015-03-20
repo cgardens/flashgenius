@@ -1,3 +1,3 @@
 class Performance < ActiveRecord::Base
-  belongs_to :cards_deck
+  belongs_to :card
 end

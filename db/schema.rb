@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312233357) do
+ActiveRecord::Schema.define(version: 20150320190529) do
 
   create_table "cards", force: true do |t|
     t.string   "question"
@@ -20,13 +20,14 @@ ActiveRecord::Schema.define(version: 20150312233357) do
     t.string   "answer_3"
     t.string   "answer_4"
     t.string   "answer_number"
+    t.string   "deck_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "cards_decks", force: true do |t|
+  create_table "deck_performances", force: true do |t|
+    t.string   "performance_score"
     t.string   "deck_id"
-    t.string   "card_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,7 +41,7 @@ ActiveRecord::Schema.define(version: 20150312233357) do
   end
 
   create_table "performances", force: true do |t|
-    t.string   "cards_deck_id"
+    t.string   "card_id"
     t.string   "correct"
     t.string   "previous_card_id"
     t.string   "certainty"

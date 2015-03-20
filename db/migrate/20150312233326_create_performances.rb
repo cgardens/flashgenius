@@ -1,7 +1,7 @@
 class CreatePerformances < ActiveRecord::Migration
   def change
     create_table :performances do |t|
-      t.string :cards_deck_id
+      t.string :card_id
       t.string :correct
       t.string :previous_card_id
       t.string :certainty
