@@ -70,12 +70,33 @@ class DecksController < ApplicationController
   end
 
   def next_card
-    #happen client side, consider removing
+    #happens client side, consider removing
+  end
+
+  def copy_deck
+    old_deck = Deck.find(params[:id])
+    new_deck = User.find(current_user).decks.create(name: old_deck.name)
+    new_deck.save
+
+    old_deck.cards.each do |card|
+      new_deck.cards.create(question: card.question, answer_1: card.answer_1, answer_2: card.answer_2, answer_3: card.answer_3, answer_4: card.answer_4, answer_number: card.answer_number)
+    end
+
+    redirect_to user_deck_path(user_id: new_deck.user_id, id: new_deck.id)
   end
 
   private
   def deck_info
     params.require(:deck).permit(:name)
+  end
+
+  #this was copied from the decks controller. DRY THIS OUT
+  def current_user
+    if session[:id]
+      session[:id]
+    else
+      p 'no user logged in'
+    end
   end
 
 end
