@@ -1,124 +1,19 @@
-<h1>you're taking a quiz right now...</h1>
+<h1>show deck page</h1>
 
-<button id='start'>start</button>
+<h2><%= @deck.name %></h2>
 
-<div class='card-container'>
+<% if @user.id == current_user %>
+  <%= link_to 'edit deck', edit_user_deck_path(user_id: @user.id, id: @deck.id) %>
+<% end %>
 
-</div>
-
-  <div style="display: none">
-    <div id='user_id'><%= @user.id %></div>
-    <div id='deck_id'><%= @deck.id %></div>
+<div class='cards-container'>
+<% @cards.each do |card| %>
+  <div class='card' id='card_<%= card.id %>'>
+    <div class='questions'><%= card.question %></div>
+    <div class='answers_1'><%= card.answer_1 %></div>
+    <div class='answers_2'><%= card.answer_2 %></div>
+    <div class='answers_3'><%= card.answer_3 %></div>
+    <div class='answers_4'><%= card.answer_4 %></div>
   </div>
-
-  <script>
-  var cards, currentCard, previousCard;
-
-
-  $('#start').on('click', function(e){
-    getCards(e);
-    hideStartButton();
-  })
-
-  function bindCardEventListeners () {
-    $('.card-form').on('submit', function(event){
-      validateAnswer(event);
-      hideSubmitButton();
-      addNextQuestionButton();
-    })
-  }
-
-
-  function addNextQuestionButton(){
-    $('.card-container').append("<button class='next-question-button'>next question</button>");
-    bindNextQuestionListeners();
-  }
-
-  function bindNextQuestionListeners(){
-    $('.next-question-button').on('click', function(){
-      console.log(cards);
-      if(cards.length){
-        showCard();
-      } else {
-        console.log('all done');
-        window.location.replace('/users/' + $('#user_id').html())
-        // $.ajax({
-        //   url:  '/users/' + $('#user_id').html(),
-        //   type: 'get'
-        // })
-      }
-    })
-  }
-
-  function hideSubmitButton(){
-    $('.card-submit').hide();
-  }
-
-  function validateAnswer(event){
-    event.preventDefault();
-    console.log('validating answer')
-    var answer = $('.card-form').serialize()
-    //IF ANSWER CHANGES, CHANGE INDEX NUMBERS ACCORDINGLY
-    console.log(answer)
-    var answerNum = answer[8];
-    var certaintyNum = answer.substring(22, answer.length)
-    var correct
-    if (answerNum === currentCard.answer_number) {
-      $('.card-container').append('<p>correct answer!</p>');
-      correct = "1";
-    } else {
-      $('.card-container').append('<p>wrong answer! correct answer is ' + currentCard.answer_number + '</p>');
-      correct = "-1";
-    }
-
-    if (previousCard){
-      var previous_card_id = previousCard.id;
-    }
-
-    sendToServer({answer: answerNum, certainty: certaintyNum, correct: correct, user_id: $('#user_id').html(), deck_id: $('#deck_id').html(), card_id: currentCard.id, previous_card_id: previous_card_id});
-  }
-
-  function sendToServer(data){
-    var url = '/users/' + $('#user_id').html() +'/decks/' + $('#deck_id').html() + '/validate';
-    $.ajax({
-      url: url,
-      type: 'post',
-      data: data
-    }).done(function(data){
-      console.log('saved')
-    }).fail(function(data){
-      console.log('not saved')
-    })
-  }
-
-  function hideStartButton(){
-    $('#start').hide();
-  }
-
-
-  function showCard (){
-    previousCard = currentCard;
-    currentCard = cards.shift();
-    console.log(currentCard);
-    $(".card-container").empty();
-    $(".card-container").append("<div class='card'><form class='card-form'><fieldset><legend>knowledge card</legend><p>Question:</p><div class='card_question'>" + currentCard.question + "</div><input id='answer_1' name='answers' type='radio' value='1'>" + currentCard.answer_1 + "</input><br><input id='answer_2' name='answers' type='radio' value='2'>" + currentCard.answer_2 + "</input><br><input id='answer_3' name='answers' type='radio' value='3'>" + currentCard.answer_3 + "</input><br><input id='answer_4' name='answers' type='radio' value='4'>" + currentCard.answer_4 + "</input><br></fieldset><fieldset><legend>certainty</legend><input type='radio' name='certainties' value='0.4'>1</input><input type='radio' name='certainties' value='0.6'>2</input><input type='radio' name='certainties' value='0.8'>3</input><input type='radio' name='certainties' value='1.0'>4</input></fieldset><input class='card-submit' type='submit'></input></form></div></div>");
-    bindCardEventListeners();
-  }
-
-  function getCards (e){
-    var url = '/users/' + $('#user_id').html() +'/decks/' + $('#deck_id').html() + '/start_quiz'
-    $.ajax({
-      url: url,
-      type: 'get',
-      dataType: 'json'
-    }).done(function(data){
-      cards = data.cards
-      console.log(cards);
-      showCard();
-    }).fail(function(data){
-      console.log(data)
-    })
-  }
-
-  </script>
+<% end %>
 </div>

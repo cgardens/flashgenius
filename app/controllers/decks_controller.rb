@@ -10,6 +10,15 @@ class DecksController < ApplicationController
   end
 
   def show
+    # /users/1/decks/2/edit
+    @user = User.find(params[:user_id])
+    @deck = @user.decks.find(params[:id])
+    @cards = @deck.cards
+
+    # render json: {user: @user, deck: @deck, cards: @cards}
+  end
+
+  def take_quiz
     # p params
     @user = User.find(params[:user_id])
     @deck = @user.decks.find(params[:id])

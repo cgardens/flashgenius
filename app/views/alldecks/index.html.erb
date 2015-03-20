@@ -8,7 +8,7 @@
 <h3>Newest Decks</h3>
 <div class='decks-continer'>
   <% @decks.each do |deck| %>
-    <div class='deck'><%= link_to deck.name, edit_user_deck_path(user_id: deck.user_id, id: deck.id) %></div>
+    <div class='deck'><%= link_to deck.name, user_deck_path(user_id: deck.user_id, id: deck.id) %></div>
   <% end %>
 </div>
 
