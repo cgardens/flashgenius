@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         get 'next_card'
         get 'take_quiz'
         get 'start_quiz'
+        post 'copy_deck'
       end
       resources :cards
     end
