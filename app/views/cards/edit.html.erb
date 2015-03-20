@@ -1,17 +1,12 @@
 <h1>Edit Question</h1>
 
-<form action='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards/<%= @card.id %>/update' type="hidden" name="_method" value="put">
-  <p>Question:</p>
-  <input type='text' name='card[question]' value='<%= @card.question %>'></input>
-  <p>Answers:</p><br>
-  1<input type='text' name='card[answer_1]' value='<%= @card.answer_1 %>'></input><br>
-  2<input type='text' name='card[answer_2]' value='<%= @card.answer_2 %>'></input><br>
-  3<input type='text' name='card[answer_3]' value='<%= @card.answer_3 %>'></input><br>
-  4<input type='text' name='card[answer_4]' value='<%= @card.answer_4 %>'></input><br>
-  <p>The Correct Answer is: </p><br>
-  <input type='text' name='card[answer_number]' value='<%= @card.answer_number %>'></input><br>
-  <input type='submit' value='Update'></input>
-  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-</form>
+<%= form_for [@user, @deck, @card] do |f| %>
+  Question:<%= f.text_field :question %><br>
+  Answer 1:<%= f.text_field :answer_1 %><br>
+  Answer 2:<%= f.text_field :answer_2 %><br>
+  Answer 3:<%= f.text_field :answer_3 %><br>
+  Answer 4:<%= f.text_field :answer_4 %><br>
+  <%= f.submit "Update" %>
+<% end %>
 
 

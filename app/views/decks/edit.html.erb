@@ -2,7 +2,8 @@
 
 <h2><%= @deck.name %></h2>
 
-<a href='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards/new' class='add-card-button'>add a card</a>
+<%= link_to 'add a new card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id) %>
+
 
 <div class='cards-container'>
 <% @cards.each do |card| %>
