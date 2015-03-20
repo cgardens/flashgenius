@@ -1,0 +1,12 @@
+<h1>Edit Question</h1>
+
+<%= form_for [@user, @deck, @card] do |f| %>
+  Question:<%= f.text_field :question %><br>
+  Answer 1:<%= f.text_field :answer_1 %><br>
+  Answer 2:<%= f.text_field :answer_2 %><br>
+  Answer 3:<%= f.text_field :answer_3 %><br>
+  Answer 4:<%= f.text_field :answer_4 %><br>
+  <%= f.submit "Update" %>
+<% end %>
+
+

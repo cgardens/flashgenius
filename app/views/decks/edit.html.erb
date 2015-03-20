@@ -2,7 +2,8 @@
 
 <h2><%= @deck.name %></h2>
 
-<a href='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards/new' class='add-card-button'>add a card</a>
+<%= link_to 'add a new card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id) %>
+
 
 <div class='cards-container'>
 <% @cards.each do |card| %>
@@ -12,7 +13,7 @@
     <div class='answers_2'><%= card.answer_2 %></div>
     <div class='answers_3'><%= card.answer_3 %></div>
     <div class='answers_4'><%= card.answer_4 %></div>
-    <button action='' class='edit-button'>edit</button>
+    <a href='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards/<%= card.id %>/edit' class='edit-button'>edit</a>
     <button action='' class='discard-button' id='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards/<%= card.id %>'>discard</button>
   </div>
 <% end %>
