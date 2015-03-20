@@ -7,6 +7,7 @@ class CreateCards < ActiveRecord::Migration
       t.string :answer_3
       t.string :answer_4
       t.string :answer_number
+      t.string :deck_id
 
       t.timestamps
     end
