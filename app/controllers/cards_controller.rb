@@ -6,7 +6,7 @@ class CardsController < ApplicationController
     @card = @deck.cards.find(params[:id])
     @card.update_attributes(card_info)
 
-    redirect_to user_deck_path(user_id: @user.id, id: @deck.id)
+    redirect_to edit_user_deck_path(user_id: @user.id, id: @deck.id)
   end
 
   def new
