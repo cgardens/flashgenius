@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       member do
         post 'validate'
         get 'next_card'
+        get 'take_quiz'
         get 'start_quiz'
       end
       resources :cards
