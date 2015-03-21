@@ -5,6 +5,8 @@ class CreateDecks < ActiveRecord::Migration
       t.string :name
       t.float :performance_score
       t.datetime :hour_mastery_is_attained
+      t.string :current_mastery_level
+      t.string :hours_until_deck_review
 
       t.timestamps
     end
