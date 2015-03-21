@@ -50,34 +50,11 @@ class UsersController < ApplicationController
 
 
 
-  # def current_mastery_level(deck)
-  #   # !!!! Need performance scores to be in integer percents, this should be refactored to a case statement with breaks.
-  #   current_proficiency_score = #!!!! Something from database
-  #   current_master_level = ''
-  #   if current_proficiency_score > 95
-  #     current_master_level = "master"
-  #     break
-  #   elsif current_proficiency_score <= 95 && current_proficiency_score > 70
-  #     current_master_level = "adept"
-  #     break
-  #   elsif current_proficiency_score <= 70 && current_proficiency_score > 45
-  #     current_master_level = "intermediate"
-  #     break
-  #   else current_proficiency_score <= 45
-  #     current_master_level = "beginner"
-  #     break
-  #   end
-  #   current_master_level
-  # end
 
 
 
-  # def calculate_hours_until_deck_review(current_master_level_percent)
-  #   # x = current proficiency as integer percent
-  #   # y = hours until deck should be reviewed
-  #   # y =(0.93908028) * (1.06487168^x)
-  #   hours_until_deck_review = (0.93908028) * (1.06487168 ** current_master_level_percent )
-  # end
+
+
 
 
   #------------------------------------------------------------------------------

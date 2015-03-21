@@ -91,15 +91,24 @@ class DecksController < ApplicationController
     calculate_deck_performance_score(deck)
     calculate_and_save_hour_mastery_is_attained(deck)
     deck.reload
+
     # #CURRENT MASTERY LEVEL
     current_mastery_level(deck)
     # #WHEN TO REVIEW THE DECK (OPTIMAL TIME)
-    # calculate_hours_until_deck_review()
+    calculate_hours_until_deck_review((deck.performance_score + 1) * 50)
 
     redirect_to user_path(params[:user_id])
   end
 
   private
+
+   def calculate_hours_until_deck_review(current_master_level_percent)
+    # x = current proficiency as integer percent
+    # y = hours until deck should be reviewed
+    # y =(0.93908028) * (1.06487168^x)
+    p "HOURS UNTIL DECK REVIEW " + "=+"*50
+    p hours_until_deck_review = (0.93908028) * (1.06487168 ** current_master_level_percent )
+  end
 
   def current_mastery_level(deck)
     # !!!! Need performance scores to be in integer percents, this should be refactored to a case statement with breaks.
