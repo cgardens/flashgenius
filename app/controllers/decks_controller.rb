@@ -131,7 +131,7 @@ class DecksController < ApplicationController
       hour_mastery_is_attained = DateTime.now + 1000000000000
       Deck.find(deck.id).update_attribute(:hour_mastery_is_attained, hour_mastery_is_attained)
     elsif hour_mastery_is_attained > 0
-      hour_mastery_is_attained = DateTime.new(hour_mastery_is_attained)
+      hour_mastery_is_attained = DateTime.strptime(hour_mastery_is_attained.to_s, '%s')
       Deck.find(deck.id).update_attribute(:hour_mastery_is_attained, hour_mastery_is_attained)
     else  #this is catching when the line is flat or there is only a single point
       hour_mastery_is_attained = DateTime.now
