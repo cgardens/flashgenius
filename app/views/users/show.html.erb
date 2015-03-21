@@ -2,6 +2,7 @@
 <h2><%= @user.first_name %></h2>
 
 <%= link_to 'create new deck', new_user_deck_path(@user.id) %>
+<br><br>
 
 <div class='decks-container'>
 <% @decks.each do |deck| %>
@@ -13,6 +14,12 @@
     <% else %>
       | <%= button_to 'copy deck to your profile', copy_deck_user_deck_path(user_id: deck.user_id, id: deck.id) %>
     <% end %>
+      | Current Mastery Level: <%= deck.current_mastery_level %>
+      | Optimal Number of Hours Until Next Review: <%= (deck.hours_until_deck_review.to_f * 60 * 60 - (DateTime.now.to_i - deck.updated_at.to_i) )/ 3600  %>
+      | Predicted Date of Mastery at Current Rate: <%= deck.hour_mastery_is_attained %>
+      <br><br>
+
   </div>
 <% end %>
 </div>
+<!-- Predicted Date of Mastery at Current Rate: 2015-03-21 02:01:32 UTC  -->
