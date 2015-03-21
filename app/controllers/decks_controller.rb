@@ -89,13 +89,10 @@ class DecksController < ApplicationController
   def end_quiz
     deck = Deck.find(params[:id])
     calculate_deck_performance_score(deck)
-
-    # #HOW LONG UNTIL MASTERY
-    # how_long_until_mastery(deck)
     calculate_and_save_hour_mastery_is_attained(deck)
-
+    deck.reload
     # #CURRENT MASTERY LEVEL
-    # current_mastery_level(deck)
+    current_mastery_level(deck)
     # #WHEN TO REVIEW THE DECK (OPTIMAL TIME)
     # calculate_hours_until_deck_review()
 
@@ -103,6 +100,30 @@ class DecksController < ApplicationController
   end
 
   private
+
+  def current_mastery_level(deck)
+    # !!!! Need performance scores to be in integer percents, this should be refactored to a case statement with breaks.
+    p "CURRENT PROFICIENCY SCORE " + "+"*50
+    p deck.performance_score
+    p current_proficiency_score = (deck.performance_score + 1) * 50 #!!!! Something from database
+    current_master_level = ''
+    if current_proficiency_score > 95
+      current_master_level = "master"
+
+
+    elsif current_proficiency_score <= 95 && current_proficiency_score > 70
+      current_master_level = "adept"
+
+    elsif current_proficiency_score > 45 && current_proficiency_score <= 70
+      current_master_level = "intermediate"
+
+    else current_proficiency_score <= 45
+      current_master_level = "beginner"
+
+    end
+    p "CURRENT MASTER LEVEL" + "*"*100
+    p current_master_level
+  end
 
   def calculate_and_save_hour_mastery_is_attained(deck)
     #Now need to calculate HOW LONG UNTIL MASTERY using the best fit linear equation for the deck.
