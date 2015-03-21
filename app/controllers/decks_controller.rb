@@ -90,10 +90,61 @@ class DecksController < ApplicationController
     deck = Deck.find(params[:id])
     calculate_deck_performance_score(deck)
 
+    # #HOW LONG UNTIL MASTERY
+    # how_long_until_mastery(deck)
+    calculate_and_save_hour_mastery_is_attained(deck)
+
+    # #CURRENT MASTERY LEVEL
+    # current_mastery_level(deck)
+    # #WHEN TO REVIEW THE DECK (OPTIMAL TIME)
+    # calculate_hours_until_deck_review()
+
     redirect_to user_path(params[:user_id])
   end
 
   private
+
+  def calculate_and_save_hour_mastery_is_attained(deck)
+    #Now need to calculate HOW LONG UNTIL MASTERY using the best fit linear equation for the deck.
+    #Need the deck scores in one array --- y values.
+    deck_scores = []  #These are integer percents.
+    #Need the timestamps corresponding to each  --- x values
+    deck_scores_times = []
+    deck.deck_performances.each do |deck_performance|
+      deck_scores.push( (deck_performance.performance_score.to_f + 1) * 50)
+      deck_scores_times.push(deck_performance.created_at.to_i)
+    end
+    #Initialize SimpleLinearRegression object
+    linear_regression_object = SimpleLinearRegression.new(deck_scores_times,deck_scores)
+    #Calculate what hour in the future mastery will be attained
+    #x = (95 - b) / m
+    slope = linear_regression_object.slope
+    yintercept = linear_regression_object.y_intercept
+
+    hour_mastery_is_attained = (95 - yintercept) / slope
+    p '*' * 50
+    p 'hour_mastery_is_attained'
+    p hour_mastery_is_attained
+    p '*' * 50
+
+    if hour_mastery_is_attained == 'NaN'
+      hour_mastery_is_attained = DateTime.now + 1000000000000
+      Deck.find(deck.id).update_attribute(:hour_mastery_is_attained, hour_mastery_is_attained)
+    elsif hour_mastery_is_attained > 0
+      hour_mastery_is_attained = DateTime.new(hour_mastery_is_attained)
+      Deck.find(deck.id).update_attribute(:hour_mastery_is_attained, hour_mastery_is_attained)
+    else  #this is catching when the line is flat or there is only a single point
+      hour_mastery_is_attained = DateTime.now
+      Deck.find(deck.id).update_attribute(:hour_mastery_is_attained, hour_mastery_is_attained)
+    end
+    # time_of_last_attempt = DateTime.Now
+
+    # hours_until_mastery = hour_mastery_is_attained - time_of_last_attempt
+    # if hours_until_mastery > 500
+    #   hours_until_mastery = "More than 3 weeks"
+    # end
+    # hours_until_mastery
+  end
 
   def calculate_deck_performance_score(deck)
     performance_score = calculate_single_deck_ps(deck)
@@ -129,6 +180,40 @@ class DecksController < ApplicationController
 
   def deck_info
     params.require(:deck).permit(:name)
+  end
+
+  #simple linear regression
+  class SimpleLinearRegression
+    def initialize(xs, ys)
+      @xs, @ys = xs, ys
+      if @xs.length != @ys.length
+        raise "Unbalanced data. xs need to be same length as ys"
+      end
+    end
+
+    def y_intercept
+      mean(@ys) - (slope * mean(@xs))
+    end
+
+    def slope
+      x_mean = mean(@xs)
+      y_mean = mean(@ys)
+
+      numerator = (0...@xs.length).reduce(0) do |sum, i|
+        sum + ((@xs[i] - x_mean) * (@ys[i] - y_mean))
+      end
+
+      denominator = @xs.reduce(0) do |sum, x|
+        sum + ((x - x_mean) ** 2)
+      end
+
+      (numerator / denominator)
+    end
+
+    def mean(values)
+      total = values.reduce(0) { |sum, x| x.to_i + sum }
+      Float(total) / Float(values.length)
+    end
   end
 
   #this was copied from the decks controller. DRY THIS OUT

@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20150320190529) do
     t.string   "user_id"
     t.string   "name"
     t.float    "performance_score"
+    t.datetime "hour_mastery_is_attained"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
