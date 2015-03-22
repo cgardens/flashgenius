@@ -56,6 +56,9 @@ ActiveRecord::Schema.define(version: 20150320190529) do
     t.string   "email"
     t.string   "first_name"
     t.string   "google_id"
+    t.string   "access_token"
+    t.datetime "expiration_time"
+    t.string   "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -4,6 +4,9 @@ class CreateUsers < ActiveRecord::Migration
       t.string :email
       t.string :first_name
       t.string :google_id
+      t.string :access_token
+      t.datetime :expiration_time
+      t.string :image_url
 
       t.timestamps
     end
