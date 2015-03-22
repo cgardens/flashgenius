@@ -4,8 +4,11 @@ class WelcomeController < ApplicationController
   def index
   end
 
+  def splash
+  end
+
   def auth
-    redirect_to "https://accounts.google.com/o/oauth2/auth?scope=email%20profile&state=security_token%3D138r5719ru3e1%26url%3Dhttps://oa2cb.example.com/myHome&redirect_uri=http://localhost:3000/welcome/oauth2callback&response_type=code&client_id=#{ENV['GOOGLE_CLIENT_ID']}&approval_prompt=force"
+    redirect_to "https://accounts.google.com/o/oauth2/auth?scope=email%20profile&state=security_token%3D138r5719ru3e1%26url%3Dhttps://oa2cb.example.com/myHome&redirect_uri=http://localhost:3000/welcome/oauth2callback&response_type=code&client_id=#{ENV['GOOGLE_CLIENT_ID']}"
   end
 
   def oauth2callback
@@ -23,10 +26,12 @@ class WelcomeController < ApplicationController
   private
 
   def login_with_google(code)
-    access_token = get_google_user_access_token(code)
+    access_token_and_expiration = get_google_user_access_token(code)
 
-    user_info = get_google_user_info(access_token)
+    user_info = get_google_user_info(access_token_and_expiration[:access_token])
 
+    user_info[:access_token] = access_token_and_expiration[:access_token]
+    user_info[:expiration_time] = access_token_and_expiration[:expiration_time]
     user = User.where(google_id: user_info[:google_id])[0]
 
     if !user
@@ -49,21 +54,19 @@ class WelcomeController < ApplicationController
     }
 
     res = HTTParty.post('https://www.googleapis.com/oauth2/v3/token', options)
-
-    access_token = res['access_token']
+    access_token_and_expiration = {access_token: res['access_token'], expiration_time: Time.now + 60 * 60 }
   end
 
   def get_google_user_info(access_token)
     res = HTTParty.get("https://www.googleapis.com/plus/v1/people/me?scope=openid%20email%20profile&access_token=#{access_token}")
 
     res_body = JSON.parse(res.body)
-    p 'res_body'
-    p res_body
 
     user_info = {}
     user_info[:google_id] = res_body['id']
     user_info[:first_name] = res_body['name']['givenName']
     user_info[:email] = res_body['emails'][0]['value']
+    user_info[:image_url] = res_body['image']['url']
 
     user_info
   end

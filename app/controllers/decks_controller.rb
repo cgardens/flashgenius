@@ -1,25 +1,20 @@
 class DecksController < ApplicationController
 
+  before_action :require_login
+
   def edit
-    # /users/1/decks/2/edit
     @user = User.find(params[:user_id])
     @deck = @user.decks.find(params[:id])
     @cards = @deck.cards
-
-    # render json: {user: @user, deck: @deck, cards: @cards}
   end
 
   def show
-    # /users/1/decks/2/edit
     @user = User.find(params[:user_id])
     @deck = @user.decks.find(params[:id])
     @cards = @deck.cards
-
-    # render json: {user: @user, deck: @deck, cards: @cards}
   end
 
   def take_quiz
-    # p params
     @user = User.find(params[:user_id])
     @deck = @user.decks.find(params[:id])
     @cards = @deck.cards
@@ -35,7 +30,6 @@ class DecksController < ApplicationController
   end
 
   def update
-    # /users/1/decks/2/edit
     @user = User.find(params[:user_id])
     @deck = @user.decks.find(params[:id])
     @deck.update_attributes(deck_info)
@@ -58,20 +52,12 @@ class DecksController < ApplicationController
   end
 
   def validate
-    p "="*50 + "params in validate is: "
-    p params
     @user = User.find(params[:user_id])
     @deck = @user.decks.find(params[:deck_id])
     @card = @deck.cards.where(id: params[:card_id])[0]
     performance = @card.performances.create(certainty: params[:certainty], correct: params[:correct], previous_card_id: params[:previous_card_id])
-    p Performance.last
-    p performance
 
     render json: {msg: 'success'}
-  end
-
-  def next_card
-    #happens client side, consider removing
   end
 
   def copy_deck
@@ -87,6 +73,7 @@ class DecksController < ApplicationController
   end
 
   def end_quiz
+    @user = User.find(params[:user_id])
     deck = Deck.find(params[:id])
     calculate_deck_performance_score(deck)
     calculate_and_save_hour_mastery_is_attained(deck)
@@ -97,7 +84,7 @@ class DecksController < ApplicationController
     hours_until_deck_review = calculate_hours_until_deck_review((deck.performance_score + 1) * 50)
     deck.update_attributes(current_mastery_level: current_mastery_level, hours_until_deck_review: hours_until_deck_review)
 
-    redirect_to user_path(params[:user_id])
+    # redirect_to user_path(params[:user_id])
   end
 
   private
@@ -254,5 +241,10 @@ class DecksController < ApplicationController
       p 'no user logged in'
     end
   end
+
+  def require_login
+    redirect_to root_path if !session[:id]
+  end
+
 
 end

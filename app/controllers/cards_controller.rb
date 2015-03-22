@@ -1,5 +1,7 @@
 class CardsController < ApplicationController
 
+  before_action :require_login
+
   def update
     @user = User.find(params[:user_id])
     @deck = @user.decks.find(params[:deck_id])
@@ -13,8 +15,6 @@ class CardsController < ApplicationController
     @user = User.find(params[:user_id])
     @deck = @user.decks.find(params[:deck_id])
     @card = @deck.cards.new()
-
-    # render "/users/#{@user.id}/decks/#{@deck.id}/edit"
   end
 
 
@@ -29,7 +29,7 @@ class CardsController < ApplicationController
     @deck = @user.decks.find(params[:deck_id])
     @card = @deck.cards.create(card_info)
 
-    redirect_to "/users/#{@user.id}/decks/#{@deck.id}/edit"
+    redirect_to edit_user_deck_path(user_id: @user.id, id: @deck.id)
   end
 
   def destroy
@@ -46,5 +46,10 @@ class CardsController < ApplicationController
   def card_info
     params.require(:card).permit(:question, :answer_1, :answer_2, :answer_3, :answer_4, :answer_number)
   end
+
+  def require_login
+    redirect_to root_path if !session[:id]
+  end
+
 
 end

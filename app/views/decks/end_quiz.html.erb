@@ -1,0 +1,11 @@
+<h1>congratulations, you've finished the deck</h1>
+
+<p>redirecting back to your profile page so you can view your results</p>
+
+<div style="display: none">
+  <div id='user_id'><%= @user.id %></div>
+</div>
+
+<script>
+  setTimeout(function(){ window.location.replace('/users/' + $('#user_id').html() ); }, 2000);
+</script>
