@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'welcome/index'
+  get 'welcome/splash'
   get 'welcome/auth'
   get 'welcome/oauth2callback'
   get 'welcome/logout'
