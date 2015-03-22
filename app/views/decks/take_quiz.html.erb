@@ -41,7 +41,7 @@
         showCard();
       } else {
         console.log('all done');
-        window.location.replace('/users/' + $('#user_id').html())
+        window.location.replace('/users/' + $('#user_id').html() + '/decks/' + currentCard.deck_id + '/end_quiz')
         // $.ajax({
         //   url:  '/users/' + $('#user_id').html(),
         //   type: 'get'

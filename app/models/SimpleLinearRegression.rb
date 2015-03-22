@@ -26,7 +26,7 @@ class SimpleLinearRegression
   end
 
   def mean(values)
-    total = values.reduce(0) { |sum, x| x + sum }
+    total = values.reduce(0) { |sum, x| x.to_i + sum }
     Float(total) / Float(values.length)
   end
 end
