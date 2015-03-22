@@ -13,8 +13,6 @@ class CardsController < ApplicationController
     @user = User.find(params[:user_id])
     @deck = @user.decks.find(params[:deck_id])
     @card = @deck.cards.new()
-
-    # render "/users/#{@user.id}/decks/#{@deck.id}/edit"
   end
 
 
@@ -29,7 +27,7 @@ class CardsController < ApplicationController
     @deck = @user.decks.find(params[:deck_id])
     @card = @deck.cards.create(card_info)
 
-    redirect_to "/users/#{@user.id}/decks/#{@deck.id}/edit"
+    redirect_to edit_user_deck_path(user_id: @user.id, id: @deck.id)
   end
 
   def destroy

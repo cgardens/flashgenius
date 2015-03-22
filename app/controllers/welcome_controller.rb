@@ -58,8 +58,6 @@ class WelcomeController < ApplicationController
     res = HTTParty.get("https://www.googleapis.com/plus/v1/people/me?scope=openid%20email%20profile&access_token=#{access_token}")
 
     res_body = JSON.parse(res.body)
-    p 'res_body'
-    p res_body
 
     user_info = {}
     user_info[:google_id] = res_body['id']
