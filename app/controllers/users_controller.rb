@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  before_action :require_login
+
   def index
     @users = User.all
   end
@@ -11,17 +13,6 @@ class UsersController < ApplicationController
 
     return ordered_decks
   end
-
-
-
-
-
-
-
-
-
-
-  #------------------------------------------------------------------------------
 
   def show
     @user = User.find(params[:id])
@@ -61,6 +52,10 @@ class UsersController < ApplicationController
     end
 
     user_info
+  end
+
+  def require_login
+    redirect_to root_path if !session[:id]
   end
 
 end
