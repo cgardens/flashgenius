@@ -145,13 +145,13 @@ class DecksController < ApplicationController
     p '*' * 50
 
     if hour_mastery_is_attained == 'NaN'
-      hour_mastery_is_attained = DateTime.now + 1000000000000
+      hour_mastery_is_attained = (DateTime.now + 1000000000000).to_i
       Deck.find(deck.id).update_attribute(:hour_mastery_is_attained, hour_mastery_is_attained)
     elsif hour_mastery_is_attained > 0
-      hour_mastery_is_attained = DateTime.strptime(hour_mastery_is_attained.to_s, '%s')
+      # hour_mastery_is_attained = DateTime.strptime(hour_mastery_is_attained.to_s, '%s')
       Deck.find(deck.id).update_attribute(:hour_mastery_is_attained, hour_mastery_is_attained)
     else  #this is catching when the line is flat or there is only a single point
-      hour_mastery_is_attained = DateTime.now
+      hour_mastery_is_attained = DateTime.now.to_i
       Deck.find(deck.id).update_attribute(:hour_mastery_is_attained, hour_mastery_is_attained)
     end
     # time_of_last_attempt = DateTime.Now
