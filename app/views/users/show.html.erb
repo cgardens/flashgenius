@@ -1,9 +1,12 @@
 <h1>profile page</h1>
+<img src="<%= @user.image_url %>"><img>
 <h2><%= @user.first_name %></h2>
+<p><%= @user.email %></p>
 
 <%= link_to 'create new deck', new_user_deck_path(@user.id) %>
 <br><br>
 
+<h4>your decks</h4>
 <div class='decks-container'>
 <% @decks.each do |deck| %>
   <div>

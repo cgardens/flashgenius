@@ -8,7 +8,7 @@
 <h3>Newest Decks</h3>
 <div class='decks-continer'>
   <% @decks.each do |deck| %>
-    <div class='deck'><%= link_to deck.name, user_deck_path(user_id: deck.user_id, id: deck.id) %></div>
+    <div class='deck'><%= link_to deck.name, user_deck_path(user_id: deck.user_id, id: deck.id) %> | <%= deck.user.first_name %> | <%= deck.user.email %> | <%= button_to 'copy deck to your profile', copy_deck_user_deck_path(user_id: deck.user_id, id: deck.id) %></div>
   <% end %>
 </div>
 
@@ -29,7 +29,7 @@
 
 
       for(var i = 0; i<deckMatchesLength; i++){
-        $('.search-decks-container').append('<div class=deck>' + '<a href=/users/' + deckMatches[i].user_id + '/decks/' + deckMatches[i].id + '/edit>' + deckMatches[i].name + '</a>' + '</div>')
+        $('.search-decks-container').append('<h4>search results</h4><div class=deck>' + '<a href=/users/' + deckMatches[i].user_id + '/decks/' + deckMatches[i].id + '/edit>' + deckMatches[i].name + '</a>' + '</div>')
       }
 
     }).fail(function(data){
