@@ -87,6 +87,7 @@ class DecksController < ApplicationController
   end
 
   def end_quiz
+    @user = User.find(params[:user_id])
     deck = Deck.find(params[:id])
     calculate_deck_performance_score(deck)
     calculate_and_save_hour_mastery_is_attained(deck)
@@ -97,7 +98,7 @@ class DecksController < ApplicationController
     hours_until_deck_review = calculate_hours_until_deck_review((deck.performance_score + 1) * 50)
     deck.update_attributes(current_mastery_level: current_mastery_level, hours_until_deck_review: hours_until_deck_review)
 
-    redirect_to user_path(params[:user_id])
+    # redirect_to user_path(params[:user_id])
   end
 
   private
