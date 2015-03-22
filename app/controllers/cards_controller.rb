@@ -1,5 +1,7 @@
 class CardsController < ApplicationController
 
+  before_action :require_login
+
   def update
     @user = User.find(params[:user_id])
     @deck = @user.decks.find(params[:deck_id])
@@ -44,5 +46,10 @@ class CardsController < ApplicationController
   def card_info
     params.require(:card).permit(:question, :answer_1, :answer_2, :answer_3, :answer_4, :answer_number)
   end
+
+  def require_login
+    redirect_to root_path if !session[:id]
+  end
+
 
 end

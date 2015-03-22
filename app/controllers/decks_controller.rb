@@ -1,5 +1,7 @@
 class DecksController < ApplicationController
 
+  before_action :require_login
+
   def edit
     @user = User.find(params[:user_id])
     @deck = @user.decks.find(params[:id])
@@ -239,5 +241,10 @@ class DecksController < ApplicationController
       p 'no user logged in'
     end
   end
+
+  def require_login
+    redirect_to root_path if !session[:id]
+  end
+
 
 end
