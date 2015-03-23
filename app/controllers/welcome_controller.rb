@@ -108,8 +108,10 @@ class WelcomeController < ApplicationController
     if match_local_host
       "http://#{match_local_host[0]}"
     elsif match_url
+      p #this doesn't work for some reason
       p 'match url url'
       p match_url[0]
+      # this works
       p "https://regression-fit-knowledge-cards.herokuapp.com/"
     else
       p 'could not scrape url'
