@@ -70,7 +70,7 @@ class DecksController < ApplicationController
 
   def copy_deck
     old_deck = Deck.find(params[:id])
-    new_deck = User.find(current_user).decks.create(name: old_deck.name)
+    new_deck = User.find(current_user).decks.create(name: old_deck.name, hour_mastery_is_attained: "indeterminate, need more data", current_mastery_level: "indeterminate, need more data", hours_until_deck_review: "indeterminate, need more data")
     new_deck.save
 
     old_deck.cards.each do |card|
