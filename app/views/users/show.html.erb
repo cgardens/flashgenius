@@ -19,8 +19,21 @@
       | <%= button_to 'copy deck to your profile', copy_deck_user_deck_path(user_id: deck.user_id, id: deck.id) %>
     <% end %>
       | Current Mastery Level: <%= deck.current_mastery_level %>
-      | Optimal Number of Hours Until Next Review: <%= (deck.hours_until_deck_review.to_f * 60 * 60 - (DateTime.now.to_i - deck.updated_at.to_i) )/ 3600  %>
-      | Predicted Date of Mastery at Current Rate: <span class='time'><%= deck.hour_mastery_is_attained.to_i %></span>
+
+      | Optimal Number of Hours Until Next Review:
+      <% if deck.hours_until_deck_review == "indeterminate, need more data" %>
+        <%= deck.hours_until_deck_review %>
+      <% else %>
+        <%= ((deck.hours_until_deck_review.to_f * 60 * 60 - (DateTime.now.to_i - deck.updated_at.to_i) )/ 3600).round(2)  %>
+      <% end %>
+
+      | Predicted Date of Mastery at Current Rate:
+      <% if deck.hour_mastery_is_attained == "indeterminate, need more data" %>
+        <%= deck.hour_mastery_is_attained %>
+      <% else %>
+        <span class='time'><%= deck.hour_mastery_is_attained.to_i %></span>
+      <% end %>
+
       <br><br>
 
   </div>
