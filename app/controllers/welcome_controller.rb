@@ -109,7 +109,7 @@ class WelcomeController < ApplicationController
       "http://#{match_local_host[0]}"
     elsif match_url
       p 'match url url'
-      p "https://#{match_url[0]}"
+      p "match_url[0]"
     else
       p 'could not scrape url'
     end
