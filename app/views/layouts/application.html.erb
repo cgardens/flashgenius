@@ -8,9 +8,9 @@
 </head>
 <body>
 <div class='navbar'>
-  <%= link_to 'find other users', users_path %>
-  <%= link_to 'see all other decks', alldecks_index_path %>
   <% if logged_in? %>
+    <%= link_to 'find other users', users_path %>
+    <%= link_to 'see all other decks', alldecks_index_path %>
     <%= link_to 'my profile', user_path(session[:id])%>
     <%= link_to 'logout', '/welcome/logout' %>
   <% end %>

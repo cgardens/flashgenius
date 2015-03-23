@@ -1,5 +1,9 @@
 <h1>Most Recent Decks</h1>
 
+<% if !logged_in? %>
+  <%= link_to 'sign up / login', welcome_auth_path %>
+<% end %>
+
 <h3>search decks</h3>
 <input class='deck-search-bar' type='text'></input>
 <div class='search-decks-container'></div>

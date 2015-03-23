@@ -77,7 +77,7 @@ class DecksController < ApplicationController
       new_deck.cards.create(question: card.question, answer_1: card.answer_1, answer_2: card.answer_2, answer_3: card.answer_3, answer_4: card.answer_4, answer_number: card.answer_number)
     end
 
-    redirect_to user_deck_path(user_id: new_deck.user_id, id: new_deck.id)
+    redirect_to user_path(id: new_deck.user_id)
   end
 
   def end_quiz

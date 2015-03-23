@@ -6,7 +6,10 @@
   Answer 2:<%= f.text_field :answer_2 %><br>
   Answer 3:<%= f.text_field :answer_3 %><br>
   Answer 4:<%= f.text_field :answer_4 %><br>
+  Enter the number of the correct answer: <%= f.text_field :answer_number %><br>
+
   <%= f.submit "Update" %>
+  <%= link_to 'cancel', edit_user_deck_path(user_id: @user.id, id: @deck.id) %>
 <% end %>
 
 
