@@ -92,6 +92,16 @@ class DecksController < ApplicationController
     hours_until_deck_review = calculate_hours_until_deck_review((deck.performance_score + 1) * 50)  #Works, could be updated for better fit
     deck.update_attributes(current_mastery_level: current_mastery_level, hours_until_deck_review: hours_until_deck_review)
 
+    total = 0
+    correct = 0
+    deck.cards.each do |card|
+      total += 1
+      if card.performances.last.correct == "1"
+        correct += 1
+      end
+    end
+
+    @score = (correct.to_f / total) * 100
     # redirect_to user_path(params[:user_id])
   end
 
