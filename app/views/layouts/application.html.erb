@@ -24,7 +24,8 @@
 
   function convertIndividualTimeFromUTCUNIXToLocal(htmlTag){
     var unmodifiedDate = htmlTag.innerHTML
-    var t = new Date(unmodifiedDate * 1000);
+    console.log(unmodifiedDate)
+    var t = new Date(unmodifiedDate * 1000 + currentTimeZoneOffsetInHours * 60 * 60 * 1000);
     htmlTag.innerHTML = t;
   }
 

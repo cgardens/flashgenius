@@ -8,7 +8,7 @@ class WelcomeController < ApplicationController
   end
 
   def auth
-    redirect_to "https://accounts.google.com/o/oauth2/auth?scope=email%20profile&state=security_token%3D138r5719ru3e1%26url%3Dhttps://oa2cb.example.com/myHome&redirect_uri=http://localhost:3000/welcome/oauth2callback&response_type=code&client_id=#{ENV['GOOGLE_CLIENT_ID']}"
+    redirect_to "https://accounts.google.com/o/oauth2/auth?scope=email%20profile&state=security_token%3D138r5719ru3e1%26url%3Dhttps://oa2cb.example.com/myHome&redirect_uri=https://regression-fit-knowledge-cards.herokuapp.com/welcome/oauth2callback&response_type=code&client_id=#{ENV['GOOGLE_CLIENT_ID']}"
   end
 
   def oauth2callback
@@ -48,7 +48,7 @@ class WelcomeController < ApplicationController
         code: code,
               client_id: ENV['GOOGLE_CLIENT_ID'],
               client_secret: ENV['GOOGLE_CLIENT_SECRET'],
-              redirect_uri: 'http://localhost:3000/welcome/oauth2callback',
+              redirect_uri: 'https://regression-fit-knowledge-cards.herokuapp.com/welcome/oauth2callback',
               grant_type: 'authorization_code'
       }
     }
