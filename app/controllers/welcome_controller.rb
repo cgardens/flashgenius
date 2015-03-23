@@ -108,7 +108,7 @@ class WelcomeController < ApplicationController
     if match_local_host
       "http://#{match_local_host[0]}"
     elsif match_url
-      match_url[0]
+      p match_url[0]
     else
       p 'could not scrape url'
     end
