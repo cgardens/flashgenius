@@ -14,6 +14,7 @@
     <% if @user.id == current_user %>
       | <%= link_to 'take quiz', take_quiz_user_deck_path(user_id: deck.user_id, id: deck.id) %>
       | <%= link_to 'edit deck', edit_user_deck_path(user_id: deck.user_id, id: deck.id) %>
+      | <%= button_to 'delete deck', { controller: :decks, action: 'destroy', id: deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'} %>
     <% else %>
       | <%= button_to 'copy deck to your profile', copy_deck_user_deck_path(user_id: deck.user_id, id: deck.id) %>
     <% end %>

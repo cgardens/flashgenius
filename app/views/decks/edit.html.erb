@@ -3,6 +3,8 @@
 <h2><%= @deck.name %></h2>
 
 <%= link_to 'add a new card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id) %>
+<%= link_to 'edit deck name' %>
+<%= button_to 'delete deck', { controller: :decks, action: 'destroy', id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'} %>
 
 
 <div class='cards-container'>

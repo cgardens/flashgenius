@@ -4,9 +4,13 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
 # Use sqlite3 as the database for Active Record
+<<<<<<< HEAD
 # gem 'sqlite3'
 gem 'pg'
 
+=======
+gem 'sqlite3'
+>>>>>>> 3f33a7d69226cfe81c15ad4af21f949afec7d116
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -32,8 +36,6 @@ gem 'dotenv'
 # gem 'dotenv-rails', :groups => [:development, :test]
 gem 'httparty'
 gem 'json'
-
-gem 'rails_12factor', group: :production
 
 
 group :development, :test do
