@@ -77,12 +77,12 @@ class DecksController < ApplicationController
     @user = User.find(params[:user_id])
     deck = Deck.find(params[:id])
     calculate_deck_performance_score(deck)  #Works
-    calculate_and_save_hour_mastery_is_attained(deck)  #PROBLEMS.....
+    calculate_and_save_hour_mastery_is_attained(deck)  #Works
     deck.reload
     # #CURRENT MASTERY LEVEL
     current_mastery_level = current_mastery_level(deck)  #Works
     # #WHEN TO REVIEW THE DECK (OPTIMAL TIME)
-    hours_until_deck_review = calculate_hours_until_deck_review((deck.performance_score + 1) * 50)
+    hours_until_deck_review = calculate_hours_until_deck_review((deck.performance_score + 1) * 50)  #Works, could be updated for better fit
     deck.update_attributes(current_mastery_level: current_mastery_level, hours_until_deck_review: hours_until_deck_review)
 
     # redirect_to user_path(params[:user_id])
@@ -95,7 +95,7 @@ class DecksController < ApplicationController
     # y = hours until deck should be reviewed
     # y =(0.93908028) * (1.06487168^x)
     p "HOURS UNTIL DECK REVIEW " + "=+"*50
-    p hours_until_deck_review = ((0.93908028) * (1.06487168 ** current_master_level_percent )).round(1)
+    p hours_until_deck_review = ((0.93908028) * (1.06487168 ** current_master_level_percent )).round(2)
   end
 
   def current_mastery_level(deck)
@@ -135,52 +135,31 @@ class DecksController < ApplicationController
     end
 
     #Sufficient Data Points so Initialize SimpleLinearRegression object
-    p '*' * 50
-    p '*' * 50
-    p "deck_scores: "
-    p deck_scores
-    p "deck_scores_times: "
-    p deck_scores_times
     linear_regression_object = SimpleLinearRegression.new(deck_scores_times,deck_scores)
     #Calculate what hour in the future mastery will be attained
     #x = (95 - b) / m
-    p "slope: "
-    p slope = linear_regression_object.slope
-    p "yintercept: "
-    p yintercept = linear_regression_object.y_intercept
+    slope = linear_regression_object.slope
+    yintercept = linear_regression_object.y_intercept
     hour_mastery_is_attained = (95 - yintercept) / slope
-    p 'hour_mastery_is_attained'
-    p hour_mastery_is_attained
-    p '*' * 50
-    p '*' * 50
 
     if hour_mastery_is_attained == 'NaN'
-      hour_mastery_is_attained = (DateTime.now + 1000000000000).to_i
+      #The linear regression has failed because there is only 1 data point or, they are all equal
+      hour_mastery_is_attained = "Indeterminate, need more data"
       Deck.find(deck.id).update_attribute(:hour_mastery_is_attained, hour_mastery_is_attained)
-    elsif hour_mastery_is_attained > 0
-      # hour_mastery_is_attained = DateTime.strptime(hour_mastery_is_attained.to_s, '%s')
+    elsif slope < 0
+      #if slopes are negative, hour mastery is attained is infinite, but more encouraging to say "greater than 1 month"
+      hour_mastery_is_attained = "Greater than 1 month"
       Deck.find(deck.id).update_attribute(:hour_mastery_is_attained, hour_mastery_is_attained)
-    else  #this is catching when the line is flat or there is only a single point
-      hour_mastery_is_attained = DateTime.now.to_i
+    else
+      #everything has worked correctly, convert to UNIX time, and save in database
+      hour_mastery_is_attained.to_i
       Deck.find(deck.id).update_attribute(:hour_mastery_is_attained, hour_mastery_is_attained)
     end
-    # time_of_last_attempt = DateTime.Now
 
-    # hours_until_mastery = hour_mastery_is_attained - time_of_last_attempt
-    # if hours_until_mastery > 500
-    #   hours_until_mastery = "More than 3 weeks"
-    # end
-    # hours_until_mastery
-
-    #     "deck_scores: "
-    # [   ]
-    # "deck_scores_times: "
-    # [, , , ]
 
     #Test Fit:
     #  {{0.0,1427073195},{0.0,1427073245},{3.333333333333349,1427073280},{7.500000000000001,1427073345}}
     # 1.42707×10^9+16.7397 x
-
     # "**************************************************"
     # "**************************************************"
     # "deck_scores: "
@@ -193,10 +172,10 @@ class DecksController < ApplicationController
     # -76205360.69513637
     # "hour_mastery_is_attained"
     # 1427074998.467676
+    # (95 - yintercept) / slope
+    # (95 - -76205360.69513637) / 0.05339975528753717
     # "**************************************************"
     # "**************************************************"
-
-
 
   end
 

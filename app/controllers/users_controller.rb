@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def ordered_decks(user)
     all_decks = user.decks
 
-    ordered_decks = all_decks.order('performance_score DESC')
+    ordered_decks = all_decks.order('performance_score DESC').reverse
 
     return ordered_decks
   end
