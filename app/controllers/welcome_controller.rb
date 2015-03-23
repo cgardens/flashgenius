@@ -110,6 +110,7 @@ class WelcomeController < ApplicationController
     elsif match_url
       p 'match url url'
       p match_url[0]
+      p "https://regression-fit-knowledge-cards.herokuapp.com/"
     else
       p 'could not scrape url'
     end
