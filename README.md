@@ -13,7 +13,7 @@ We are currently on version 1. Version 1 is meant to be a proof of concept in bu
 RFNC is built on rails. Login is handled via google oauth.
 
 ##Try it out
-RFNC is live at https://rfnc.herokuapp.com
+RFNC is live at [https://flashgenius.herokuapp.com](https://flashgenius.herokuapp.com)
 
 ##Installation
 
