@@ -70,14 +70,14 @@ class DecksController < ApplicationController
 
   def copy_deck
     old_deck = Deck.find(params[:id])
-    new_deck = User.find(current_user).decks.create(name: old_deck.name)
+    new_deck = User.find(current_user).decks.create(name: old_deck.name, hour_mastery_is_attained: "indeterminate, need more data", current_mastery_level: "indeterminate, need more data", hours_until_deck_review: "indeterminate, need more data")
     new_deck.save
 
     old_deck.cards.each do |card|
       new_deck.cards.create(question: card.question, answer_1: card.answer_1, answer_2: card.answer_2, answer_3: card.answer_3, answer_4: card.answer_4, answer_number: card.answer_number)
     end
 
-    redirect_to user_deck_path(user_id: new_deck.user_id, id: new_deck.id)
+    redirect_to user_path(id: new_deck.user_id)
   end
 
   def end_quiz
@@ -92,6 +92,16 @@ class DecksController < ApplicationController
     hours_until_deck_review = calculate_hours_until_deck_review((deck.performance_score + 1) * 50)  #Works, could be updated for better fit
     deck.update_attributes(current_mastery_level: current_mastery_level, hours_until_deck_review: hours_until_deck_review)
 
+    total = 0
+    correct = 0
+    deck.cards.each do |card|
+      total += 1
+      if card.performances.last.correct == "1"
+        correct += 1
+      end
+    end
+
+    @score = (correct.to_f / total) * 100
     # redirect_to user_path(params[:user_id])
   end
 

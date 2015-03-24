@@ -1,9 +1,20 @@
 <h1>show deck page</h1>
 
 <h2><%= @deck.name %></h2>
+<h3>owned by username: <%= @user.username %></h3>
+<div class='deck-name-edit-form'>
+  <%= form_for [@user, @deck] do |f| %>
+    Deck Name:<%= f.text_field :name %><br>
+    <%= f.submit "Update" %>
+  <% end %>
+    <button action='' class='cancel-deck-name-edit'>cancel</button>
+</div>
+
+<hr>
 
 <% if @user.id == current_user %>
-  <%= link_to 'edit deck', edit_user_deck_path(user_id: @user.id, id: @deck.id) %>
+  <%= link_to 'take quiz', take_quiz_user_deck_path(user_id: @deck.user_id, id: @deck.id) %>
+  <button action='' class='deck-name-edit-button'>edit deck name</button>
   <%= button_to 'delete deck', { controller: :decks, action: 'destroy', id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'} %>
 
 <% else %>
@@ -21,3 +32,21 @@
   </div>
 <% end %>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $('.deck-name-edit-form').hide()
+
+    $('.cancel-deck-name-edit').on('click', function(e){
+      e.preventDefault()
+      $('.deck-name-edit-form').hide()
+    })
+
+    $('.deck-name-edit-button').on('click', function(e){
+      e.preventDefault()
+      $('.deck-name-edit-form').show()
+    })
+  })
+
+
+</script>

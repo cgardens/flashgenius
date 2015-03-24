@@ -1,7 +1,9 @@
 <h1>edit deck page</h1>
 
 <h2><%= @deck.name %></h2>
+<h3>owned by username: <%= @user.username %></h3>
 
+<%= link_to 'take quiz', take_quiz_user_deck_path(user_id: @deck.user_id, id: @deck.id) %>
 <%= link_to 'add a new card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id) %>
 <%= link_to 'edit deck name' %>
 <%= button_to 'delete deck', { controller: :decks, action: 'destroy', id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'} %>
@@ -16,6 +18,7 @@
     <div class='answers_3'><%= card.answer_3 %></div>
     <div class='answers_4'><%= card.answer_4 %></div>
     <a href='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards/<%= card.id %>/edit' class='edit-button'>edit</a>
+    <%= button_to 'delete card', { controller: :cards, action: 'destroy', id: card.id, deck_id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'} %>
     <button action='' class='discard-button' id='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards/<%= card.id %>'>discard</button>
   </div>
 <% end %>

@@ -1,5 +1,7 @@
 <h1>New Question</h1>
 
+<%= link_to 'back to deck edit', edit_user_deck_path(user_id: @user.id, id: @deck.id) %>
+
 <form action='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards' method='post'>
   <p>Question:</p>
   </input><input type='text' name='card[question]'></input>
@@ -8,7 +10,7 @@
   2<input type='text' name='card[answer_2]'></input><br>
   3<input type='text' name='card[answer_3]'></input><br>
   4<input type='text' name='card[answer_4]'></input><br>
-  <p>The Correct Answer is: </p><br>
+  <p>Enter the number of the correct answer: </p><br>
   <input type='text' name='card[answer_number]'></input><br>
   <input type='submit' name='Create'></input>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>

@@ -28,18 +28,8 @@ class WelcomeController < ApplicationController
   def oauth2callback
     #code coming back from google
 
-    login_with_google(params[:code])
-
-    redirect_to user_path(session[:id])
-  end
-
-  def logout
-    logout_user
-  end
-
-  private
-
-  def login_with_google(code)
+    #was login_with_google(params[:code])
+    code = params[:code]
     access_token_and_expiration = get_google_user_access_token(code)
 
     user_info = get_google_user_info(access_token_and_expiration[:access_token])
@@ -51,9 +41,32 @@ class WelcomeController < ApplicationController
     if !user
       user = User.new(user_info)
       user.save
+
+      @user = user
+      redirect_to welcome_create_username_path
+    else
+      create_user_session(user)
+
+      redirect_to user_path(session[:id])
     end
 
-    create_user_session(user)
+  end
+
+  def create_username
+    @user = User.last
+
+    create_user_session(@user)
+  end
+
+  def logout
+    logout_user
+  end
+
+  private
+
+  def login_with_google(code)
+    #got put back in controller action
+
   end
 
   def get_google_user_access_token(code)

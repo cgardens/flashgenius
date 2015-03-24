@@ -1,6 +1,11 @@
 <h1>you're taking a quiz right now...</h1>
 
-<button id='start'>start</button>
+<% if @deck.cards.length > 0  %>
+  <button id='start'>start</button>
+<% elsif @deck.cards.length == 0 %>
+  <p>you don't have any cards in this deck</p>
+  <%= link_to 'add a card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id) %>
+<% end %>
 
 <div class='card-container'>
 

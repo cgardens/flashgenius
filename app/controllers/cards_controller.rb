@@ -39,7 +39,7 @@ class CardsController < ApplicationController
 
     Card.destroy(params[:id])
 
-    render json: {msg: "destroyed: #{params[:id]}"}
+    redirect_to edit_user_deck_path(user_id: @user.id, id: @deck.id)
   end
 
   private

@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150320190529) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "cards", force: true do |t|
     t.string   "question"
     t.string   "answer_1"
@@ -59,6 +62,7 @@ ActiveRecord::Schema.define(version: 20150320190529) do
     t.string   "access_token"
     t.datetime "expiration_time"
     t.string   "image_url"
+    t.string   "username"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
