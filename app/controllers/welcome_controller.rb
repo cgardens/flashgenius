@@ -2,6 +2,7 @@ class WelcomeController < ApplicationController
   Dotenv.load
 
   def index
+    @user = User.find(session[:id]) if session[:id]
     # p "#{host}#{port_string}"
     # p Request.host
     p 'root url'
