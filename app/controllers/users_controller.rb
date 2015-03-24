@@ -31,6 +31,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find(params[:id])
+    @user.update_attributes(user_info)
+
+    redirect_to user_path(@user)
+  end
+
   def live_search_users
     search_query = params[:search_query].downcase
     user_matches = User.where("email LIKE ?", "%#{search_query}%")
@@ -43,7 +50,7 @@ class UsersController < ApplicationController
   private
 
   def user_info
-    params.require(:user).permit(:email, :first_name, :google_id)
+    params.require(:user).permit(:email, :first_name, :google_id, :username)
   end
 
   def downcase_user_info(user_info)

@@ -4,7 +4,7 @@
 <input class='user-search-bar' type='text'></input>
 <div class='users-container'>
   <% @users.each do |user| %>
-    <p><%= link_to user.first_name, user_path(user.id) %> | <%= user.email %></p>
+    <p><%= user.first_name %> | <%= link_to user.username, user_path(user.id) %></p>
   <% end %>
 </div>
 

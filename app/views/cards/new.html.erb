@@ -1,5 +1,7 @@
 <h1>New Question</h1>
 
+<%= link_to 'back to deck edit', edit_user_deck_path(user_id: @user.id, id: @deck.id) %>
+
 <form action='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards' method='post'>
   <p>Question:</p>
   </input><input type='text' name='card[question]'></input>

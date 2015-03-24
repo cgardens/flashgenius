@@ -1,6 +1,7 @@
 <h1>show deck page</h1>
 
 <h2><%= @deck.name %></h2>
+<h3>owned by username: <%= @user.username %></h3>
 <div class='deck-name-edit-form'>
   <%= form_for [@user, @deck] do |f| %>
     Deck Name:<%= f.text_field :name %><br>

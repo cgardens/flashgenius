@@ -1,6 +1,7 @@
 <h1>edit deck page</h1>
 
 <h2><%= @deck.name %></h2>
+<h3>owned by username: <%= @user.username %></h3>
 
 <%= link_to 'take quiz', take_quiz_user_deck_path(user_id: @deck.user_id, id: @deck.id) %>
 <%= link_to 'add a new card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id) %>

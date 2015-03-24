@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20150320190529) do
     t.string   "access_token"
     t.datetime "expiration_time"
     t.string   "image_url"
+    t.string   "username"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,0 +1,7 @@
+<h4>please enter a username</h4>
+
+<%= form_for @user do |f| %>
+  username: <%= f.text_field :username %><br>
+
+  <%= f.submit "Update" %>
+<% end %>
