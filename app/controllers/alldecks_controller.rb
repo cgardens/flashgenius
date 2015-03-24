@@ -1,6 +1,7 @@
 class AlldecksController < ApplicationController
 
   def index
+    @user = User.find(session[:id]) if session[:id]
     @decks = Deck.order('created_at DESC').limit(15)
   end
 
