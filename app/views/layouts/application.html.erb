@@ -33,11 +33,10 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
                   <% if logged_in? %>
+                    <li><%= link_to image_tag("#{@user.image_url}", class: "profile-img"), user_path(session[:id]) %></li>
                     <li><%= link_to 'Find Users', users_path %></li>
                     <li><%= link_to 'All Decks', alldecks_index_path %></li>
-                    <li><%= link_to 'My Decks', user_path(session[:id])%></li>
                     <li><%= link_to 'Logout', '/welcome/logout' %></li>
-                    <li><img class="profile-img" src="<%= @user.image_url %>"></li>
                   <% end %>
                   <% if !logged_in? %>
                     <li><%= link_to 'Login', welcome_auth_path %></li>
