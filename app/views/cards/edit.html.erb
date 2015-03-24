@@ -15,7 +15,7 @@
         <h4 class="text-center">Correct Answer:</h4>
         <%= f.text_field :answer_number, placeholder: "Correct Answer Number", class: "form-control"  %><br>
         <br><br>
-        <%= f.submit "Save", class: "btn btn-md btn-success form-control" %>
+        <%= f.submit "Save", class: "btn btn-md btn-info form-control" %>
         <br><br>
         <%= link_to 'cancel', edit_user_deck_path(user_id: @user.id, id: @deck.id), class: "btn btn-md btn-default form-control" %>
       <% end %>

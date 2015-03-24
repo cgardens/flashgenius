@@ -6,7 +6,7 @@
             <br>
             <%= link_to '+ Add Card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id), class: "btn btn-xl btn-primary form-control" %>
             <br><br>
-            <%= button_to "Delete Deck", { controller: :decks, action: 'destroy', id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'}, class: "btn btn-xl btn-warning form-control" %>
+            <%= button_to "Delete Deck", { controller: :decks, action: 'destroy', id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'}, class: "btn btn-xl btn-danger form-control" %>
             <br>
             <div class='cards-container'>
             <br><br><br>
