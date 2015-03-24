@@ -125,7 +125,7 @@ class WelcomeController < ApplicationController
       p 'match url url'
       p match_url[0]
       # this works
-      p "https://happy-learning.herokuapp.com/"
+      p "http://happy-learning.herokuapp.com/"
     else
       p 'could not scrape url'
     end
