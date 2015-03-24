@@ -38,6 +38,9 @@
                     <li><%= link_to 'My Decks', user_path(session[:id])%></li>
                     <li><%= link_to 'Logout', '/welcome/logout' %></li>
                   <% end %>
+                  <% if !logged_in? %>
+                    <li><%= link_to 'Login', welcome_auth_path %></li>
+                  <% end %>
               </ul>
           </div>
           <!-- /.navbar-collapse -->
