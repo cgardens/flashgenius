@@ -17,7 +17,6 @@
         <br><br><br><br>
       </div>
       <% if @user.id == current_user %>
-        <%= button_to 'Delete Deck', { controller: :decks, action: 'destroy', id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'}, class: "btn btn-xl btn-default form-control" %>
       <div action='' class='deck-name-edit-button btn btn-xl btn-default form-control'>Edit Name</div>
         <%= link_to 'Take Quiz!', take_quiz_user_deck_path(user_id: @deck.user_id, id: @deck.id), class: "btn btn-xl btn-success form-control" %>
       <% else %>

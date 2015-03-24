@@ -40,7 +40,7 @@
           <% if @user.id == current_user %>
             <div class="deck-btn"><%= link_to 'Take Quiz', take_quiz_user_deck_path(user_id: deck.user_id, id: deck.id), class: "btn btn-xl btn-default form-control" %></div>
             <div class="deck-btn"><%= link_to 'Edit Deck', edit_user_deck_path(user_id: deck.user_id, id: deck.id), class: "btn btn-xl btn-default form-control" %></div>
-            <div class="deck-btn"><%= button_to 'Delete Deck', { controller: :decks, action: 'destroy', id: deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'}, class: "btn btn-xl btn-default form-control" %></div>
+
           <% else %>
             | <%= button_to 'copy deck to your profile', copy_deck_user_deck_path(user_id: deck.user_id, id: deck.id) %>
           <% end %>
