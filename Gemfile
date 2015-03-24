@@ -39,9 +39,6 @@ group :development, :test do
   gem 'rspec-rails'
 end
 
-gem 'sweet-alert'
-gem 'sweet-alert-confirm'
-
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

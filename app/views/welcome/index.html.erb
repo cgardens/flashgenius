@@ -1,33 +1,12 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3 text-center">
-      <%= image_tag("fg-banner2.png", class: "banner-img") %>
-      <p>
-        <em class="slogan">
-          The Adaptive Flash-Card App
-        </em>
-      </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <br><br>
-      <h5 class="text-center">
-        What Is Flash Genius?
-      </h5>
-      <p class="text-center">
-        As you study, the app models your performance and learns about how you learn. It tells you what you should study and when in order to learn in the most effecient manner possible. In this way, you learn more in less time time and remember it for longer. Happy learning!
-      </p>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-md-offset-4">
-        <br><br><br>
-        <%= link_to 'Login With Google', welcome_auth_path, class: "form-control btn btn-primary btn-xl" %>
-        <br><br>
-        <%= link_to 'View All Decks', alldecks_index_path, class: "form-control btn btn-danger btn-xl" %>
-        <br><br>
-        <%= link_to 'More Information', welcome_splash_path, class: "form-control btn btn-warning btn-xl" %>
-      </div>
-    </div>
-  </div>
-</div>
+<h1>Welcome to Happy Learning</h1>
+
+<p>Want to learn more faster and better?  This app is an adaptive flash-card app.  As you study, the app models your performance and learns about how you learn.  It tells you what you should study and when in order to learn in the most effecient manner possible.  In this way, you learn more in less time time and remember it for longer.  Happy learning!</p>
+
+<%= link_to 'sign up / login', welcome_auth_path %>
+
+
+
+<%= link_to 'all decks', alldecks_index_path %>
+
+<%= link_to 'more info', welcome_splash_path %>
+

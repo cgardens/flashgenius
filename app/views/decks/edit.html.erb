@@ -1,34 +1,26 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <h1 class="text-center"><%= @deck.name %></h1>
-            <h4 class="text-center">Created By: <%= @user.username %></h4>
-            <br>
-            <%= link_to '+ Add Card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id), class: "btn btn-xl btn-primary form-control" %>
-            <br><br>
-            <%= button_to "Delete Deck", { controller: :decks, action: 'destroy', id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'}, class: "btn btn-xl btn-danger form-control" %>
-            <br>
-            <div class='cards-container'>
-            <br><br><br>
-            <% @cards.each do |card| %>
-              <div class='card' id='card_<%= card.id %>'>
-                <div class='questions'><em><%= card.question %></em></div>
-                <ol>
-                  <li><div class='answers_1'><%= card.answer_1 %></div></li>
-                  <li><div class='answers_2'><%= card.answer_2 %></div></li>
-                  <li><div class='answers_3'><%= card.answer_3 %></div></li>
-                  <li><div class='answers_4'><%= card.answer_4 %></div></li>
-                </ol>
-                <a href='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards/<%= card.id %>/edit' class='edit-button btn btn-xl btn-default form-control card-btn'>Edit</a>
-                <%= button_to 'Delete', { controller: :cards, action: 'destroy', id: card.id, deck_id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'}, class: "btn btn-xl btn-default form-control card-btn" %>
-              </div>
-              <br>
-            <% end %>
-           </div>
-        </div>
-    </div>
-  <br><br><br>
+<h1>edit deck page</h1>
+
+<h2><%= @deck.name %></h2>
+<h3>owned by username: <%= @user.username %></h3>
+
+<%= link_to 'take quiz', take_quiz_user_deck_path(user_id: @deck.user_id, id: @deck.id) %>
+<%= link_to 'add a new card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id) %>
+<%= link_to 'edit deck name' %>
+<%= button_to 'delete deck', { controller: :decks, action: 'destroy', id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'} %>
+
+
+<div class='cards-container'>
+<% @cards.each do |card| %>
+  <div class='card' id='card_<%= card.id %>'>
+    <div class='questions'><%= card.question %></div>
+    <div class='answers_1'><%= card.answer_1 %></div>
+    <div class='answers_2'><%= card.answer_2 %></div>
+    <div class='answers_3'><%= card.answer_3 %></div>
+    <div class='answers_4'><%= card.answer_4 %></div>
+    <a href='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards/<%= card.id %>/edit' class='edit-button'>edit</a>
+    <%= button_to 'delete card', { controller: :cards, action: 'destroy', id: card.id, deck_id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'} %>
+    <button action='' class='discard-button' id='/users/<%= @user.id %>/decks/<%= @deck.id %>/cards/<%= card.id %>'>discard</button>
+  </div>
+<% end %>
 </div>
-
-
 

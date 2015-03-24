@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   before_action :require_login
 
   def index
-    @user = User.find(session[:id]) if session[:id]
     @users = User.all
   end
 
@@ -19,6 +18,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     #Order the decks based upon most recent performance score
     @decks = ordered_decks(@user)
+
   end
 
   def create

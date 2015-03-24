@@ -1,28 +1,26 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <h1 class="text-center"><%= @deck.name %> Quiz</h1>
-      <br><br>
-      <% if @deck.cards.length > 0  %>
-        <button class="btn btn-xl btn-success form-control" id='start'>Start</button>
-      <% elsif @deck.cards.length == 0 %>
-        <p>No Cards In This Deck!</p>
-        <%= link_to 'Add Card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id) %>
-      <% end %>
-      <div class='card-container'></div>
-      <div style="display: none">
-        <div id='user_id'><%= @user.id %></div>
-        <div id='deck_id'><%= @deck.id %></div>
-      </div>
-    </div>
-  </div>
+<h1>you're taking a quiz right now...</h1>
+
+<% if @deck.cards.length > 0  %>
+  <button id='start'>start</button>
+<% elsif @deck.cards.length == 0 %>
+  <p>you don't have any cards in this deck</p>
+  <%= link_to 'add a card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id) %>
+<% end %>
+
+<div class='card-container'>
+
 </div>
 
+  <div style="display: none">
+    <div id='user_id'><%= @user.id %></div>
+    <div id='deck_id'><%= @deck.id %></div>
+  </div>
 
-<script>
+  <script>
   var cards, currentCard, previousCard;
 
- $('#start').on('click', function(e){
+
+  $('#start').on('click', function(e){
     getCards(e);
     hideStartButton();
   })
@@ -35,8 +33,9 @@
     })
   }
 
+
   function addNextQuestionButton(){
-    $('.card-container').append("<button class='next-question-button btn btn-md btn-info form-control'>Next Question</button>");
+    $('.card-container').append("<button class='next-question-button'>next question</button>");
     bindNextQuestionListeners();
   }
 
@@ -70,10 +69,10 @@
     var certaintyNum = answer.substring(22, answer.length)
     var correct
     if (answerNum === currentCard.answer_number) {
-      $('.card-container').append('<p class="text-center answer-alert">Correct Answer!</p>');
+      $('.card-container').append('<p>correct answer!</p>');
       correct = "1";
     } else {
-      $('.card-container').append('<p class="text-center answer-alert">Wrong Answer! Correct answer is ' + currentCard.answer_number + '</p>');
+      $('.card-container').append('<p>wrong answer! correct answer is ' + currentCard.answer_number + '</p>');
       correct = "-1";
     }
 
@@ -107,7 +106,7 @@
     currentCard = cards.shift();
     console.log(currentCard);
     $(".card-container").empty();
-    $(".card-container").append("<div class='card'><form class='card-form'><fieldset><div class='card_question questions'>" + currentCard.question + "</div><input id='answer_1' name='answers' type='radio' value='1'>" + " " + currentCard.answer_1 + "</input><br><input id='answer_2' name='answers' type='radio' value='2'>" + " " + currentCard.answer_2 + "</input><br><input id='answer_3' name='answers' type='radio' value='3'>" + " " + currentCard.answer_3 + "</input><br><input id='answer_4' name='answers' type='radio' value='4'>" + " " +currentCard.answer_4 + "</input><br></fieldset><br><fieldset><h5 class='text-center'>Certainty?</h5><input  type='radio' name='certainties' value='0.4'> 1 </input><input type='radio' name='certainties' value='0.6'> 2 </input><input type='radio' name='certainties' value='0.8'> 3 </input><input type='radio' name='certainties' value='1.0'> 4 </input></fieldset><input class='card-submit btn btn-md btn-primary form-control' type='submit'></input></form></div></div>");
+    $(".card-container").append("<div class='card'><form class='card-form'><fieldset><legend>knowledge card</legend><p>Question:</p><div class='card_question'>" + currentCard.question + "</div><input id='answer_1' name='answers' type='radio' value='1'>" + currentCard.answer_1 + "</input><br><input id='answer_2' name='answers' type='radio' value='2'>" + currentCard.answer_2 + "</input><br><input id='answer_3' name='answers' type='radio' value='3'>" + currentCard.answer_3 + "</input><br><input id='answer_4' name='answers' type='radio' value='4'>" + currentCard.answer_4 + "</input><br></fieldset><fieldset><legend>certainty</legend><input type='radio' name='certainties' value='0.4'>1</input><input type='radio' name='certainties' value='0.6'>2</input><input type='radio' name='certainties' value='0.8'>3</input><input type='radio' name='certainties' value='1.0'>4</input></fieldset><input class='card-submit' type='submit'></input></form></div></div>");
     bindCardEventListeners();
   }
 
@@ -126,4 +125,5 @@
     })
   }
 
-</script>
+  </script>
+</div>

@@ -1,12 +1,7 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <h4 class="text-center">Please Enter A Username</h4>
-      <%= form_for @user do |f| %>
-        <%= f.text_field :username, placeholder: "ex. Mr. Genius" %><br>
-        <%= f.submit "Submit", class: "btn btn-md btn-info" %>
-      <% end %>
-    </div>
-  </div>
-</div>
+<h4>please enter a username</h4>
 
+<%= form_for @user do |f| %>
+  username: <%= f.text_field :username %><br>
+
+  <%= f.submit "Update" %>
+<% end %>

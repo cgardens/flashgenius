@@ -1,15 +1,8 @@
-<div class="container">
-  <div class="row">
-    <h1 class="text-center">New Deck</h1>
-    <br><br>
-    <div class="col-md-4 col-md-offset-4">
-      <form action='/users/<%= @user.id %>/decks' method='post'>
-        <input type='text' class="form-control" name='deck[name]', placeholder="Deck Name.."></input>
-        <br>
-        <input type='submit' class="btn btn-md btn-info form-control"></input>
-        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-      </form>
-    </div>
-  </div>
-</div>
+<h1>new deck page</h1>
+
+<form action='/users/<%= @user.id %>/decks' method='post'>
+  Name<input type='text' name='deck[name]'></input>
+  <input type='submit'></input>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+</form>
 

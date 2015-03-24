@@ -1,28 +1,15 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <h1 class="text-center">Edit Card</h1>
-      <br><br>
-      <%= form_for [@user, @deck, @card] do |f| %>
-        <h4 class="text-center">Question?</h4>
-        <%= f.text_field :question, placeholder: "Question?", class: "form-control"  %><br>
-        <h4 class="text-center">Answers:</h4>
-        <%= f.text_field :answer_1, placeholder: "Answer 1", class: "form-control"  %><br>
-        <%= f.text_field :answer_2, placeholder: "Answer 2", class: "form-control"  %><br>
-        <%= f.text_field :answer_3, placeholder: "Answer 3", class: "form-control"  %><br>
-        <%= f.text_field :answer_4, placeholder: "Answer 4", class: "form-control"  %><br>
-        <br>
-        <h4 class="text-center">Correct Answer:</h4>
-        <%= f.text_field :answer_number, placeholder: "Correct Answer Number", class: "form-control"  %><br>
-        <br><br>
-        <%= f.submit "Save", class: "btn btn-md btn-info form-control" %>
-        <br><br>
-        <%= link_to 'cancel', edit_user_deck_path(user_id: @user.id, id: @deck.id), class: "btn btn-md btn-default form-control" %>
-      <% end %>
-    </div>
-  </div>
-</div>
+<h1>Edit Question</h1>
 
+<%= form_for [@user, @deck, @card] do |f| %>
+  Question:<%= f.text_field :question %><br>
+  Answer 1:<%= f.text_field :answer_1 %><br>
+  Answer 2:<%= f.text_field :answer_2 %><br>
+  Answer 3:<%= f.text_field :answer_3 %><br>
+  Answer 4:<%= f.text_field :answer_4 %><br>
+  Enter the number of the correct answer: <%= f.text_field :answer_number %><br>
 
+  <%= f.submit "Update" %>
+  <%= link_to 'cancel', edit_user_deck_path(user_id: @user.id, id: @deck.id) %>
+<% end %>
 
 
