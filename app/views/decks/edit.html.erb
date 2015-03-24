@@ -1,12 +1,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-            <h1 class="text-center">Edit: <%= @deck.name %></h1>
+            <h1 class="text-center"><%= @deck.name %></h1>
             <h4 class="text-center">Created By: <%= @user.username %></h4>
             <br>
-            <%= button_to "Delete Deck", { controller: :decks, action: 'destroy', id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'}, class: "btn btn-xl btn-default form-control" %>
+            <%= link_to '+ Add Card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id), class: "btn btn-xl btn-primary form-control" %>
+            <br><br>
+            <%= button_to "Delete Deck", { controller: :decks, action: 'destroy', id: @deck.id, user_id: @user.id }, method: :delete, data: {:confirm => 'Are you sure?'}, class: "btn btn-xl btn-warning form-control" %>
             <br>
-            <%= link_to '+ Add Card', new_user_deck_card_path(user_id: @user.id, deck_id: @deck.id), class: "btn btn-xl btn-default form-control" %>
             <div class='cards-container'>
             <br><br><br>
             <% @cards.each do |card| %>
