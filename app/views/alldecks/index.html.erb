@@ -22,7 +22,7 @@
             <% if deck.user_id.to_i == current_user %>
               <p class="text-center">(This is one of your decks)</p>
             <% else %>
-              <%= button_to 'Copy Deck To Your Profile', copy_deck_user_deck_path(user_id: deck.user_id, id: deck.id), class: "btn btn-xl btn-default form-control" %>
+              <%= button_to 'Copy Deck To My Profile', copy_deck_user_deck_path(user_id: deck.user_id, id: deck.id), class: "btn btn-xl btn-default form-control" %>
             <% end %>
           </div>
         <% end %>

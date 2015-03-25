@@ -6,10 +6,9 @@
       <form action='/users/<%= @user.id %>/decks' method='post'>
         <input type='text' class="form-control" name='deck[name]', placeholder="Deck Name.."></input>
         <br>
-        <input type='submit' class="btn btn-md btn-info form-control"></input>
+        <input value="Save" type='submit' class="btn btn-md btn-primary form-control"></input>
         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       </form>
     </div>
   </div>
 </div>
-

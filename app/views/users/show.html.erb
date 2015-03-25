@@ -8,9 +8,8 @@
   </div>
   <br><br>
   <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <div class='decks-container'>
-      <% @decks.each do |deck| %>
+    <% @decks.each do |deck| %>
+      <div class="col-md-4 col-sm-6">
         <div class="single-deck">
           <div class="questions">
             <em><%= link_to "#{deck.name}", user_deck_path(user_id: deck.user_id, id: deck.id) %></em>
@@ -22,9 +21,9 @@
               Optimal Number of Hours Until Next Review:
             </em>
             <% if deck.hours_until_deck_review == "indeterminate, need more data" %>
-              <%= deck.hours_until_deck_review %>
+            <%= deck.hours_until_deck_review %>
             <% else %>
-              <%= ((deck.hours_until_deck_review.to_f * 60 * 60 - (DateTime.now.to_i - deck.updated_at.to_i) )/ 3600).round(2)  %>
+            <%= ((deck.hours_until_deck_review.to_f * 60 * 60 - (DateTime.now.to_i - deck.updated_at.to_i) )/ 3600).round(2)  %>
             <% end %>
           </h5>
 
@@ -33,30 +32,22 @@
               Predicted Date of Mastery at Current Rate:
             </em>
             <% if deck.hour_mastery_is_attained == "indeterminate, need more data" %>
-              <%= deck.hour_mastery_is_attained %>
+            <%= deck.hour_mastery_is_attained %>
             <% else %>
-              <span class='time'><%= deck.hour_mastery_is_attained.to_i %></span>
+            <span class='time'><%= deck.hour_mastery_is_attained.to_i %></span>
             <% end %>
           </h5>
 
           <div class="deck-btns-container">
-          <% if @user.id == current_user %>
-            <div class="deck-btn"><%= link_to 'Take Quiz', take_quiz_user_deck_path(user_id: deck.user_id, id: deck.id), class: "btn btn-xl btn-primary form-control" %></div>
-            <div class="deck-btn"><%= link_to 'Edit Deck', edit_user_deck_path(user_id: deck.user_id, id: deck.id), class: "btn btn-xl btn-danger form-control" %></div>
-
-          <% else %>
-            | <%= button_to 'copy deck to your profile', copy_deck_user_deck_path(user_id: deck.user_id, id: deck.id) %>
-          <% end %>
+            <% if @user.id == current_user %>
+              <div class="deck-btn"><%= link_to 'Take Quiz', take_quiz_user_deck_path(user_id: deck.user_id, id: deck.id), class: "btn btn-xl btn-primary form-control" %></div>
+              <div class="deck-btn"><%= link_to 'Edit Deck', edit_user_deck_path(user_id: deck.user_id, id: deck.id), class: "btn btn-xl btn-danger form-control" %></div>
+            <% else %>
+              <%= button_to 'Copy Deck My Profile', copy_deck_user_deck_path(user_id: deck.user_id, id: deck.id), class: "btn btn-xl btn-default form-control" %>
+            <% end %>
           </div>
         </div>
-        <br><br>
-      <% end %>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
-
-
-
-
-
