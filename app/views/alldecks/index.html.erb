@@ -6,28 +6,34 @@
   </div>
   <br>
   <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <input class='deck-search-bar form-control' type='text', placeholder="Search Decks..."></input>
-      <div class='search-decks-container'></div>
-      <div class='decks-continer'>
-        <% @decks.each do |deck| %>
-          <br>
-          <div class='deck'>
-            <div class="questions">
-              <%= link_to deck.name, user_deck_path(user_id: deck.user_id, id: deck.id) %>
-            </div>
-            <div>
-              <p class="text-center">Created By: <%= link_to deck.user.username, user_path(id: deck.user_id) %></p>
-            </div>
-            <% if deck.user_id.to_i == current_user %>
-              <p class="text-center">(This is one of your decks)</p>
-            <% else %>
-              <%= button_to 'Copy Deck To My Profile', copy_deck_user_deck_path(user_id: deck.user_id, id: deck.id), class: "btn btn-xl btn-default form-control" %>
-            <% end %>
-          </div>
-        <% end %>
+    <div class="col-lg-12 text-center">
+      <div class="col-md-4 col-md-offset-4">
+        <input class='deck-search-bar form-control' type='text', placeholder="Search Decks..."></input>
+        <div class='search-decks-container'></div>
+        <div class='decks-continer'></div>
       </div>
     </div>
+  </div>
+  <br><br>
+  <div class="row">
+    <% @decks.each do |deck| %>
+      <div class="col-md-4 col-sm-6">
+        <br>
+        <div class='deck'>
+          <div class="questions">
+            <%= link_to deck.name, user_deck_path(user_id: deck.user_id, id: deck.id) %>
+          </div>
+          <div>
+            <p class="text-center">Created By: <%= link_to deck.user.username, user_path(id: deck.user_id) %></p>
+          </div>
+          <% if deck.user_id.to_i == current_user %>
+            <p class="text-center">(This is one of your decks)</p>
+          <% else %>
+            <%= button_to 'Copy Deck To My Profile', copy_deck_user_deck_path(user_id: deck.user_id, id: deck.id), class: "btn btn-xl btn-default form-control" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
 
