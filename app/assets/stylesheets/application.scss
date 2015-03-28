@@ -47,8 +47,15 @@ li a {
   margin-bottom: 20px;
 }
 
+.deck {
+  background-color: #EFEFEF;
+}
+
+.deck:hover {
+  background-color: white;
+}
+
 .deck-btn {
-  // display: inline-block;
   margin: 10px;
 }
 
